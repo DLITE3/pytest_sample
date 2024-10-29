@@ -2,16 +2,25 @@ from pathlib import Path
 import sys
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from src.wrapper import *
+from src.wrapper import is_prime
 
-def test_is_prime():
-    assert is_prime(1) == False
-    assert is_prime(2) == True
-    assert is_prime(3) == True
-    assert is_prime(4) == False
-    assert is_prime(5) == True
-    assert is_prime(6) == False
-    assert is_prime(7) == True
-    assert is_prime(8) == False
-    assert is_prime(9) == False
-    assert is_prime(10) == False
+import pytest
+
+# テストケースと期待している結果を書く
+@pytest.mark.parametrize(("number", "expected"),
+    [
+        (1,  False),
+        (2,  True), # あえて奇数にしておく エラーケース
+        (3,  True), # あえて偶数にしておく エラーケース
+        (4,  False),
+        (5,  True),
+        (6,  False),
+        (7,  True),
+        (8,  False),
+        (9,  False),
+        (10, False),
+    ]
+)
+
+def test_is_prime(number: int, expected: bool):
+    assert is_prime(number) == expected
